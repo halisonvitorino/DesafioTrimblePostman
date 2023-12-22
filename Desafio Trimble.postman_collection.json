@@ -1,0 +1,767 @@
+{
+	"info": {
+		"_postman_id": "885a52af-fa17-4294-9078-1d56732dea89",
+		"name": "Desafio Trimble",
+		"description": "## **Test #2 - HTTP Bin (rest)**\n\n[<b>HTTP Bin</b>](http://httpbin.org) **é um serviço simples de requisição e respostas HTTP construído para demonstrar o uso do protocolo HTTP.**\n\n**A documentação (swagger) pode ser encontrada em:** [<b>http://httpbin.org</b>](http://httpbin.org) EndFragment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "10042706"
+	},
+	"item": [
+		{
+			"name": "Decodificar String - Sucesso",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Critérios de Aceite ---------------------------------------------------------------------------------------\r",
+							"\r",
+							"var codigo64 = pm.variables.get('value');\r",
+							"console.log(\"Valor do parâmetro 'value':\", codigo64);\r",
+							"\r",
+							"//Validação do status code\r",
+							"pm.test(\"Valida status code - 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Validação da string decodificada na response\r",
+							"pm.test(\"Valida string decodificada no response\", function () {\r",
+							"    var minhaStringCodificada = codigo64; \r",
+							"    var stringDecodificada    = atob(codigo64);\r",
+							"    pm.response.to.have.body(stringDecodificada);\r",
+							"    console.log(\"String em base64: \", minhaStringCodificada);\r",
+							"    console.log(\"String retornada: \", stringDecodificada);    \r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/html"
+					}
+				],
+				"url": "http://httpbin.org/base64/{{value}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Decodificar String - Código Inválido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Critérios de Aceite ---------------------------------------------------------------------------------------\r",
+							"\r",
+							"var codigo64 = pm.variables.get('value');\r",
+							"console.log(\"Valor do parâmetro 'value':\", codigo64);\r",
+							"\r",
+							"//Validação do status code\r",
+							"pm.test(\"Valida status code - 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Validação de mensagem de erro\r",
+							"pm.test(\"Valida mensagem de erro - Base64 Inválida\", function () {\r",
+							"    pm.response.to.have.body(\"Incorrect Base64 data try: SFRUUEJJTiBpcyBhd2Vzb21l\");    \r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/html"
+					}
+				],
+				"url": "http://httpbin.org/base64/inexistente"
+			},
+			"response": []
+		},
+		{
+			"name": "Decodificar String - Não Encontrado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Critérios de Aceite\r",
+							"\r",
+							"//Validação do status code\r",
+							"pm.test('Valida status code - 404', function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/html"
+					}
+				],
+				"url": "http://httpbin.org/base64/"
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Item - Sucesso",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Critérios de Aceite\r",
+							"\r",
+							"var corpoResposta = pm.response.json();\r",
+							"var schema = {\r",
+							"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
+							"  \"title\": \"Generated schema for Root\",\r",
+							"  \"type\": \"object\",\r",
+							"  \"properties\": {\r",
+							"    \"args\": {\r",
+							"      \"type\": \"object\",\r",
+							"      \"properties\": {},\r",
+							"      \"required\": []\r",
+							"    },\r",
+							"    \"data\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"files\": {\r",
+							"      \"type\": \"object\",\r",
+							"      \"properties\": {},\r",
+							"      \"required\": []\r",
+							"    },\r",
+							"    \"form\": {\r",
+							"      \"type\": \"object\",\r",
+							"      \"properties\": {},\r",
+							"      \"required\": []\r",
+							"    },\r",
+							"    \"headers\": {\r",
+							"      \"type\": \"object\",\r",
+							"      \"properties\": {\r",
+							"        \"Accept\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"Accept-Encoding\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"Cache-Control\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"Content-Length\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"Content-Type\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"Host\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"Postman-Token\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"User-Agent\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"X-Amzn-Trace-Id\": {\r",
+							"          \"type\": \"string\"\r",
+							"        }\r",
+							"      },\r",
+							"      \"required\": [\r",
+							"        \"Accept\",\r",
+							"        \"Accept-Encoding\",\r",
+							"        \"Cache-Control\",\r",
+							"        \"Content-Length\",\r",
+							"        \"Content-Type\",\r",
+							"        \"Host\",\r",
+							"        \"Postman-Token\",\r",
+							"        \"User-Agent\",\r",
+							"        \"X-Amzn-Trace-Id\"\r",
+							"      ]\r",
+							"    },\r",
+							"    \"json\": {\r",
+							"      \"type\": \"object\",\r",
+							"      \"properties\": {\r",
+							"        \"checked\": {\r",
+							"          \"type\": \"boolean\"\r",
+							"        },\r",
+							"        \"criado\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"todo\": {\r",
+							"          \"type\": \"string\"\r",
+							"        }\r",
+							"      },\r",
+							"      \"required\": [\r",
+							"        \"checked\",\r",
+							"        \"criado\",\r",
+							"        \"todo\"\r",
+							"      ]\r",
+							"    },\r",
+							"    \"method\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"origin\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"url\": {\r",
+							"      \"type\": \"string\"\r",
+							"    }\r",
+							"  },\r",
+							"  \"required\": [\r",
+							"    \"args\",\r",
+							"    \"data\",\r",
+							"    \"files\",\r",
+							"    \"form\",\r",
+							"    \"headers\",\r",
+							"    \"json\",\r",
+							"    \"method\",\r",
+							"    \"origin\",\r",
+							"    \"url\"\r",
+							"  ]\r",
+							"};\r",
+							"\r",
+							"//Validação do status code\r",
+							"pm.test('Valida status code - 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"//Validação do retorno contendo o valor passado na request\r",
+							"pm.test('Body contem texto enviado no request', function () {\r",
+							"    pm.expect(pm.response.text()).to.include('Teste regressivo 1');\r",
+							"})\r",
+							"\r",
+							"//Validação do schema\r",
+							"pm.test('Schema valido', function () {\r",
+							"    pm.expect(tv4.validate(corpoResposta, schema)).to.be.true;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"todo\": \"Teste regressivo 1\",\r\n    \"checked\": false,\r\n    \"criado\":\"Halison\"\r\n}"
+				},
+				"url": "http://httpbin.org/anything"
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Item - Metodo não Permitido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Critérios de Aceite\r",
+							"\r",
+							"//Validação do status code\r",
+							"pm.test('Valida status code - 405', function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"todo\": \"Teste regressivo 1\",\r\n    \"checked\": false,\r\n    \"criado\":\"Halison\"\r\n}"
+				},
+				"url": "http://httpbin.org/"
+			},
+			"response": []
+		},
+		{
+			"name": "Alterar Item - Sucesso",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Critérios de Aceite\r",
+							"\r",
+							"var corpoResposta = pm.response.json();\r",
+							"var schema = {\r",
+							"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
+							"  \"title\": \"Generated schema for Root\",\r",
+							"  \"type\": \"object\",\r",
+							"  \"properties\": {\r",
+							"    \"args\": {\r",
+							"      \"type\": \"object\",\r",
+							"      \"properties\": {},\r",
+							"      \"required\": []\r",
+							"    },\r",
+							"    \"data\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"files\": {\r",
+							"      \"type\": \"object\",\r",
+							"      \"properties\": {},\r",
+							"      \"required\": []\r",
+							"    },\r",
+							"    \"form\": {\r",
+							"      \"type\": \"object\",\r",
+							"      \"properties\": {},\r",
+							"      \"required\": []\r",
+							"    },\r",
+							"    \"headers\": {\r",
+							"      \"type\": \"object\",\r",
+							"      \"properties\": {\r",
+							"        \"Accept\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"Accept-Encoding\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"Cache-Control\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"Content-Length\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"Content-Type\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"Host\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"Postman-Token\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"User-Agent\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"X-Amzn-Trace-Id\": {\r",
+							"          \"type\": \"string\"\r",
+							"        }\r",
+							"      },\r",
+							"      \"required\": [\r",
+							"        \"Accept\",\r",
+							"        \"Accept-Encoding\",\r",
+							"        \"Cache-Control\",\r",
+							"        \"Content-Length\",\r",
+							"        \"Content-Type\",\r",
+							"        \"Host\",\r",
+							"        \"Postman-Token\",\r",
+							"        \"User-Agent\",\r",
+							"        \"X-Amzn-Trace-Id\"\r",
+							"      ]\r",
+							"    },\r",
+							"    \"json\": {\r",
+							"      \"type\": \"object\",\r",
+							"      \"properties\": {\r",
+							"        \"todo\": {\r",
+							"          \"type\": \"string\"\r",
+							"        }\r",
+							"      },\r",
+							"      \"required\": [\r",
+							"        \"todo\"\r",
+							"      ]\r",
+							"    },\r",
+							"    \"method\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"origin\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"url\": {\r",
+							"      \"type\": \"string\"\r",
+							"    }\r",
+							"  },\r",
+							"  \"required\": [\r",
+							"    \"args\",\r",
+							"    \"data\",\r",
+							"    \"files\",\r",
+							"    \"form\",\r",
+							"    \"headers\",\r",
+							"    \"json\",\r",
+							"    \"method\",\r",
+							"    \"origin\",\r",
+							"    \"url\"\r",
+							"  ]\r",
+							"};\r",
+							"\r",
+							"//Validação do status code\r",
+							"pm.test('Valida status code - 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"//Validação do retorno contendo o valor passado no body da request\r",
+							"pm.test('Body contem texto enviado no request', function () {\r",
+							"    pm.expect(pm.response.text()).to.include('Realizar regressao');\r",
+							"})\r",
+							"\r",
+							"//Validação do schema\r",
+							"pm.test('Schema valido', function () {\r",
+							"    pm.expect(tv4.validate(corpoResposta, schema)).to.be.true;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"todo\": \"Realizar regressao\"\r\n}"
+				},
+				"url": "http://httpbin.org/anything/{{itemAlterado}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Alterar Item - Não encontrado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Critérios de Aceite\r",
+							"\r",
+							"//Validação do status code\r",
+							"pm.test('Valida status code - 404', function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"todo\": \"Realizar regressao\"\r\n}"
+				},
+				"url": "http://httpbin.org/anything/"
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar Item - Sucesso",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Critérios de Aceite\r",
+							"\r",
+							"var corpoResposta = pm.response.json();\r",
+							"var schema = {\r",
+							"  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
+							"  \"title\": \"Generated schema for Root\",\r",
+							"  \"type\": \"object\",\r",
+							"  \"properties\": {\r",
+							"    \"args\": {\r",
+							"      \"type\": \"object\",\r",
+							"      \"properties\": {},\r",
+							"      \"required\": []\r",
+							"    },\r",
+							"    \"data\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"files\": {\r",
+							"      \"type\": \"object\",\r",
+							"      \"properties\": {},\r",
+							"      \"required\": []\r",
+							"    },\r",
+							"    \"form\": {\r",
+							"      \"type\": \"object\",\r",
+							"      \"properties\": {},\r",
+							"      \"required\": []\r",
+							"    },\r",
+							"    \"headers\": {\r",
+							"      \"type\": \"object\",\r",
+							"      \"properties\": {\r",
+							"        \"Accept\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"Accept-Encoding\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"Cache-Control\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"Host\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"Postman-Token\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"User-Agent\": {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        \"X-Amzn-Trace-Id\": {\r",
+							"          \"type\": \"string\"\r",
+							"        }\r",
+							"      },\r",
+							"      \"required\": [\r",
+							"        \"Accept\",\r",
+							"        \"Accept-Encoding\",\r",
+							"        \"Cache-Control\",\r",
+							"        \"Host\",\r",
+							"        \"Postman-Token\",\r",
+							"        \"User-Agent\",\r",
+							"        \"X-Amzn-Trace-Id\"\r",
+							"      ]\r",
+							"    },\r",
+							"    \"json\": {},\r",
+							"    \"method\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"origin\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"url\": {\r",
+							"      \"type\": \"string\"\r",
+							"    }\r",
+							"  },\r",
+							"  \"required\": [\r",
+							"    \"args\",\r",
+							"    \"data\",\r",
+							"    \"files\",\r",
+							"    \"form\",\r",
+							"    \"headers\",\r",
+							"    \"json\",\r",
+							"    \"method\",\r",
+							"    \"origin\",\r",
+							"    \"url\"\r",
+							"  ]\r",
+							"};\r",
+							"\r",
+							"//Validação do status code\r",
+							"pm.test('Valida status code - 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"//Validação do retorno da request\r",
+							"pm.test('Body corresponde a chamada enviada no request', function () {\r",
+							"    pm.expect(pm.response.text()).to.include('DELETE');\r",
+							"})\r",
+							"\r",
+							"//Validação do schema\r",
+							"pm.test('Schema valido', function () {\r",
+							"    pm.expect(tv4.validate(corpoResposta, schema)).to.be.true;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": "http://httpbin.org/anything/{{idItemDeletado}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar Item - Não encontrado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Critérios de Aceite\r",
+							"\r",
+							"//Validação do status code\r",
+							"pm.test('Valida status code - 404', function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": "http://httpbin.org/anything/"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "value",
+			"value": "SFRUUEJJTiBpcyBhd2Vzb21l"
+		},
+		{
+			"key": "itemAlterado",
+			"value": "1"
+		},
+		{
+			"key": "idItemDeletado",
+			"value": "1"
+		}
+	]
+}

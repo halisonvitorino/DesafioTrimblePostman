@@ -28,7 +28,7 @@
 							"pm.test(\"Valida string decodificada no response\", function () {\r",
 							"    var stringCodificada = codigo64; \r",
 							"    var stringDecodificada  = atob(codigo64);\r",
-							"    pm.response.to.have.body(\"stringDecodificada\");\r",
+							"    pm.response.to.have.body(stringDecodificada);\r",
 							"    console.log(\"String em base64: \", stringCodificada);\r",
 							"    console.log(\"String retornada: \", stringDecodificada);        \r",
 							"});"

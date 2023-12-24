@@ -14,7 +14,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"//Critérios de Aceite ---------------------------------------------------------------------------------------\r",
+							"//Critérios de Aceite \r",
 							"\r",
 							"var codigo64 = pm.variables.get('value');\r",
 							"console.log(\"Valor do parâmetro 'value':\", codigo64);\r",
@@ -26,15 +26,12 @@
 							"\r",
 							"//Validação da string decodificada na response\r",
 							"pm.test(\"Valida string decodificada no response\", function () {\r",
-							"    var minhaStringCodificada = codigo64; \r",
-							"    var stringDecodificada    = atob(codigo64);\r",
-							"    pm.response.to.have.body(stringDecodificada);\r",
-							"    console.log(\"String em base64: \", minhaStringCodificada);\r",
-							"    console.log(\"String retornada: \", stringDecodificada);    \r",
-							"});\r",
-							"\r",
-							"\r",
-							""
+							"    var stringCodificada = codigo64; \r",
+							"    var stringDecodificada  = atob(codigo64);\r",
+							"    pm.response.to.have.body(\"stringDecodificada\");\r",
+							"    console.log(\"String em base64: \", stringCodificada);\r",
+							"    console.log(\"String retornada: \", stringDecodificada);        \r",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -42,7 +39,9 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"exec": [],
+						"exec": [
+							""
+						],
 						"type": "text/javascript"
 					}
 				}
@@ -105,7 +104,7 @@
 						"value": "text/html"
 					}
 				],
-				"url": "http://httpbin.org/base64/inexistente"
+				"url": "http://httpbin.org/base64/invalida"
 			},
 			"response": []
 		},
@@ -274,12 +273,14 @@
 							"})\r",
 							"\r",
 							"//Validação do retorno contendo o valor passado na request\r",
-							"pm.test('Body contem texto enviado no request', function () {\r",
+							"pm.test('Validação - Body contem texto enviado no request', function () {\r",
 							"    pm.expect(pm.response.text()).to.include('Teste regressivo 1');\r",
+							"    pm.expect(pm.response.text()).to.include('false');\r",
+							"    pm.expect(pm.response.text()).to.include('Halison');\r",
 							"})\r",
 							"\r",
-							"//Validação do schema\r",
-							"pm.test('Schema valido', function () {\r",
+							"//Validação do schema json retornado\r",
+							"pm.test('Validação - Schema json válido', function () {\r",
 							"    pm.expect(tv4.validate(corpoResposta, schema)).to.be.true;\r",
 							"});\r",
 							"\r",
@@ -327,7 +328,7 @@
 						"exec": [
 							"//Critérios de Aceite\r",
 							"\r",
-							"//Validação do status code\r",
+							"//Validação do status code - 405\r",
 							"pm.test('Valida status code - 405', function () {\r",
 							"    pm.response.to.have.status(405);\r",
 							"})\r",
@@ -483,12 +484,12 @@
 							"})\r",
 							"\r",
 							"//Validação do retorno contendo o valor passado no body da request\r",
-							"pm.test('Body contem texto enviado no request', function () {\r",
+							"pm.test('Validação - Body contem texto enviado no request', function () {\r",
 							"    pm.expect(pm.response.text()).to.include('Realizar regressao');\r",
 							"})\r",
 							"\r",
 							"//Validação do schema\r",
-							"pm.test('Schema valido', function () {\r",
+							"pm.test('Validação - Schema json válido', function () {\r",
 							"    pm.expect(tv4.validate(corpoResposta, schema)).to.be.true;\r",
 							"});\r",
 							"\r",
@@ -536,7 +537,7 @@
 						"exec": [
 							"//Critérios de Aceite\r",
 							"\r",
-							"//Validação do status code\r",
+							"//Validação do status code - 404\r",
 							"pm.test('Valida status code - 404', function () {\r",
 							"    pm.response.to.have.status(404);\r",
 							"})"
@@ -672,7 +673,7 @@
 							"})\r",
 							"\r",
 							"//Validação do retorno da request\r",
-							"pm.test('Body corresponde a chamada enviada no request', function () {\r",
+							"pm.test('Valida méthodo http do request', function () {\r",
 							"    pm.expect(pm.response.text()).to.include('DELETE');\r",
 							"})\r",
 							"\r",

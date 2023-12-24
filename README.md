@@ -5,7 +5,9 @@ Testes manuais da API - executa os testes de forma remota a cada atualização d
 CI/CD - Github Actions
 Postman Testes manuais com validações automatizadas em javascript - Acesso a collection disponibilizada ao avaliador
 
+
 (https://jsonformatter.org/json-to-jsonschema) - Criador de schema
+
 (https://jsonpathfinder.com) - Localizador de paths em json
 
 🛠️ Construído com

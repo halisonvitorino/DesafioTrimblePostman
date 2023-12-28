@@ -1,0 +1,4 @@
+# .gitignore
+
+# Arquivos de ambiente do Postman
+environments/*.json

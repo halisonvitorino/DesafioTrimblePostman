@@ -7,15 +7,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '14'
+            
       - name: Install Postman CLI
         run: |
-          powershell.exe -NoProfile -InputFormat None -ExecutionPolicy AllSigned -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://dl-cli.pstmn.io/install/win64.ps1'))"
-      - name: Set Up Postman Environment
-          run: |
-            echo "$POSTMAN_ENVIRONMENT" > production.json
-      - name: Login to Postman CLI
-        run: postman login --with-api-key PMAK-6585a183201670020c50978c-3f75833cdffefff911bb16f1c4e3528a5c
+          npm install -g postman-cli
+          postman --version
+        
       - name: Run API tests
         run: |
           postman collection run "10042706-885a52af-fa17-4294-9078-1d56732dea89"
+          env: 
+            POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
+            
